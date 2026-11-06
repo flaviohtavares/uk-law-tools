@@ -125,6 +125,16 @@ See the [uk-law README](https://github.com/flaviohtavares/uk-law) and its
 [COVERAGE.md](https://github.com/flaviohtavares/uk-law/blob/main/COVERAGE.md): what is included,
 what is missing, and the words the conversion is known to lose.
 
+## Who maintains this
+
+Built and maintained by **[Tavlabs Ltd](https://www.tavlabs.uk/?utm_source=github&utm_medium=uk-law-tools)**,
+a London software house for small and medium businesses. We build data pipelines like this one, and
+custom software for operations, from food safety to logistics. Need something similar?
+[contact@tavlabs.uk](mailto:contact@tavlabs.uk)
+
+This is an independent project. It is not affiliated with or endorsed by The National Archives,
+legislation.gov.uk or the UK Government.
+
 ## Licence
 
 The code here is MIT licensed. The legislation texts are © Crown and database right, under the
