@@ -63,16 +63,24 @@ Any agent that reads `SKILL.md` folders (the Agent Skills format) can use the sa
 
 ## ChatGPT, Claude.ai and other chat assistants
 
-Chat assistants cannot run the skill, but they can read the repository from the web. Paste this
-link into the chat and ask your question:
+Connect the free **UK Law MCP server**; no sign-in is needed:
+
+```
+https://uk-law-mcp.uk-law-mcp.workers.dev/mcp
+```
+
+- **Claude (claude.ai, Claude Desktop):** Settings → Connectors → *Add custom connector* → paste the URL.
+- **ChatGPT:** Settings → Apps & Connectors → Advanced → turn on *Developer mode* → *Create* →
+  paste the URL, "No authentication". Availability depends on your ChatGPT plan.
+- Any other MCP client: add it as a remote (Streamable HTTP) server. Details:
+  [uk-law-mcp](https://github.com/flaviohtavares/uk-law-mcp).
+
+Without the server, assistants that read the web can still use the repository: paste this link
+into the chat and ask your question.
 
 ```
 https://raw.githubusercontent.com/flaviohtavares/uk-law/main/llms.txt
 ```
-
-It tells the assistant how to find a law and which file to open. Giving the link of one law's
-file works too; every law is listed with its file in
-[`index/laws.csv`](https://github.com/flaviohtavares/uk-law/blob/main/index/laws.csv).
 
 ## Using the script yourself
 
