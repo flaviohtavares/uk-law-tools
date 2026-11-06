@@ -5,8 +5,8 @@ Let your AI assistant look up UK legislation and answer from the actual text.
 [**uk-law**](https://github.com/flaviohtavares/uk-law) is the legislation of the United Kingdom
 as plain text: about 130,000 Acts and regulations of the UK Parliament, Scotland, Wales and
 Northern Ireland, the historic parliaments and EU-origin law, converted from legislation.gov.uk and
-updated every day. This repository has a **skill** that teaches Claude Code, Codex and other agents
-how to search it and read it, so that you can ask:
+updated every day. This repository explains how to connect it to Claude, Claude Code, Codex and
+ChatGPT, and has a **skill** that teaches agents how to search it and read it, so that you can ask:
 
 > What does the Employment Rights Act say about notice periods?
 >
@@ -21,66 +21,101 @@ and links the official page.
 > conversion errors. Always check the official text at
 > [legislation.gov.uk](https://www.legislation.gov.uk), or ask a lawyer, before relying on it.
 
-You need Python 3 (already on macOS and most Linux systems) and an internet connection. Nothing
-else is installed, and you do not need to download the 4 GB repository.
+The skill needs Python 3 (already on macOS and most Linux systems) and an internet connection; the
+MCP server needs nothing at all. Neither downloads the 4 GB repository.
 
-## Claude Code
+## Install: step by step
 
-In Claude Code, run:
+There are two ways to connect an assistant, and both are free:
+
+- the **MCP server** (`https://uk-law-mcp.uk-law-mcp.workers.dev/mcp`), for Claude, ChatGPT, Claude Code and Codex. Nothing to install on your computer and no sign-in;
+- the **skill** (a small Python script), for Claude Code and Codex. It reads GitHub directly and works without the server.
+
+After installing, test it with a question such as:
+*"What does section 86 of the Employment Rights Act 1996 say about notice periods?"*
+The answer should quote the section and link legislation.gov.uk.
+
+### Claude (claude.ai, Claude Desktop and the mobile apps)
+
+Works on every plan; the Free plan allows one custom connector.
+
+1. Open [Customize → Connectors](https://claude.ai/customize/connectors). The same connector then works in Claude Desktop and the mobile apps.
+2. Click **+ Add**, then **Add custom connector**.
+3. Name: `UK Law`. Remote MCP server URL: `https://uk-law-mcp.uk-law-mcp.workers.dev/mcp`. Click **Continue**.
+4. Under **Authentication**, choose **No sign in**, then click **Add**.
+5. In a chat, click **+** (bottom left) → **Connectors** and make sure **UK Law** is switched on. Then ask your question.
+
+On Team and Enterprise plans an Owner adds the connector once in **Organization settings → Connectors**
+(Add → Custom → Web, same URL, "No sign in"); members then switch it on in Customize → Connectors.
+
+### Claude Code
+
+**Option A, the plugin (recommended).** Type in Claude Code:
 
 ```
 /plugin marketplace add flaviohtavares/uk-law-tools
 /plugin install uk-law@uk-law-tools
 ```
 
-Restart Claude Code if it asks. Then just ask about UK law in any session; Claude uses the skill
-by itself. To call it on purpose, type `/uk-law` and pick the skill from the menu, followed by
-your question.
+Restart Claude Code if asked. Update later with `/plugin marketplace update uk-law-tools`.
 
-To update: `/plugin marketplace update uk-law-tools`. To remove: `/plugin uninstall uk-law`.
+**Option B, the MCP server.** In a terminal:
 
-## Codex and other agents
+```sh
+claude mcp add --transport http --scope user uk-law https://uk-law-mcp.uk-law-mcp.workers.dev/mcp
+```
 
-Install the skill with one command:
+`--scope user` makes it available in every project. Check it with `/mcp` inside Claude Code.
+
+### Codex (CLI, IDE extension and app)
+
+**Option A, the MCP server.** In a terminal:
+
+```sh
+codex mcp add uk-law --url https://uk-law-mcp.uk-law-mcp.workers.dev/mcp
+```
+
+or add this to `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.uk-law]
+url = "https://uk-law-mcp.uk-law-mcp.workers.dev/mcp"
+```
+
+Check it with `codex mcp list`, then start a new Codex session.
+
+**Option B, the skill.** In a terminal:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/flaviohtavares/uk-law-tools/main/install.sh | sh
 ```
 
-It copies the skill to `~/.agents/skills/uk-law` and `~/.codex/skills/uk-law`, where Codex looks
-for skills. Restart Codex, then ask about UK law. Run the same command again to update.
+It copies the skill to `~/.agents/skills/uk-law` (and `~/.codex/skills/uk-law`). Restart Codex.
+Run the same command to update.
 
-If you prefer to see what you install, do it by hand:
+### ChatGPT
 
-```sh
-git clone --depth 1 https://github.com/flaviohtavares/uk-law-tools
-mkdir -p ~/.agents/skills
-cp -R uk-law-tools/plugins/uk-law/skills/uk-law ~/.agents/skills/
-```
+Custom MCP servers work on **chatgpt.com (web)** with a **Pro**, **Business** or **Enterprise/Edu**
+plan. On Business, only workspace admins and owners can add them.
 
-Any agent that reads `SKILL.md` folders (the Agent Skills format) can use the same folder: copy
-`plugins/uk-law/skills/uk-law` to wherever that agent keeps its skills.
+1. Open [Plugins](https://chatgpt.com/plugins).
+2. Click **+**, then **Add custom MCP server**.
+3. Name: `UK Law`. Under **Connection**, enter `https://uk-law-mcp.uk-law-mcp.workers.dev/mcp`.
+4. Authentication: **None**.
+5. Tick **I understand and want to continue**, then click **Create as a plugin** and install it.
+6. In a new chat, type **@**, pick **UK Law**, and ask your question.
 
-## ChatGPT, Claude.ai and other chat assistants
-
-Connect the free **UK Law MCP server**; no sign-in is needed:
-
-```
-https://uk-law-mcp.uk-law-mcp.workers.dev/mcp
-```
-
-- **Claude (claude.ai, Claude Desktop):** Settings → Connectors → *Add custom connector* → paste the URL.
-- **ChatGPT:** Settings → Apps & Connectors → Advanced → turn on *Developer mode* → *Create* →
-  paste the URL, "No authentication". Availability depends on your ChatGPT plan.
-- Any other MCP client: add it as a remote (Streamable HTTP) server. Details:
-  [uk-law-mcp](https://github.com/flaviohtavares/uk-law-mcp).
-
-Without the server, assistants that read the web can still use the repository: paste this link
-into the chat and ask your question.
+**Free and Plus plans:** paste this link into the chat and ask your question; ChatGPT reads the
+instructions and opens the right file:
 
 ```
 https://raw.githubusercontent.com/flaviohtavares/uk-law/main/llms.txt
 ```
+
+### Other MCP clients
+
+Add `https://uk-law-mcp.uk-law-mcp.workers.dev/mcp` as a remote server (Streamable HTTP transport,
+no authentication).
 
 ## Using the script yourself
 
