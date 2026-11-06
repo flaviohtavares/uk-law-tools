@@ -1,0 +1,12 @@
+{
+  "name": "uk-law",
+  "version": "1.0.0",
+  "description": "Find and read UK legislation (Acts, regulations, Scottish, Welsh and Northern Ireland law) from github.com/flaviohtavares/uk-law and answer with the exact section and the official link.",
+  "author": {
+    "name": "Flavio Tavares"
+  },
+  "homepage": "https://github.com/flaviohtavares/uk-law-tools",
+  "repository": "https://github.com/flaviohtavares/uk-law-tools",
+  "license": "MIT",
+  "keywords": ["law", "legislation", "uk", "legal"]
+}

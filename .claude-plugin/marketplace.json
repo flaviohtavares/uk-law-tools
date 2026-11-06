@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "uk-law-tools",
+  "version": "1.0.0",
+  "description": "Tools to search and read UK legislation from github.com/flaviohtavares/uk-law",
+  "owner": {
+    "name": "Flavio Tavares"
+  },
+  "plugins": [
+    {
+      "name": "uk-law",
+      "description": "Find and read UK Acts and regulations, and answer questions with the exact section and the official link",
+      "version": "1.0.0",
+      "source": "./plugins/uk-law",
+      "category": "productivity"
+    }
+  ]
+}
